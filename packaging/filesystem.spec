@@ -11,6 +11,7 @@ BuildArch: noarch
 Source1: https://fedorahosted.org/filesystem/browser/lang-exceptions
 Source2: iso_639.sed
 Source3: iso_3166.sed
+Source1001: packaging/filesystem.manifest 
 Requires(pre): setup 
 BuildRequires: iso-codes
 
@@ -24,6 +25,7 @@ the directories.
 rm -f $RPM_BUILD_DIR/filelist
 
 %build
+cp %{SOURCE1001} .
 
 %install
 rm -rf %{buildroot}
@@ -104,6 +106,7 @@ done
 rm -rf %{buildroot}
 
 %files -f filelist
+%manifest filesystem.manifest
 %defattr(0755,root,root,-)
 %dir %attr(555,root,root) /
 %attr(555,root,root) /bin
