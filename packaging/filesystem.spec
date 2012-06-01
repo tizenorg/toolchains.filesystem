@@ -36,7 +36,8 @@ install -p -c -m755 %SOURCE3 %{buildroot}/iso_3166.sed
 cd %{buildroot}
 
 mkdir -p bin boot dev run \
-        mnt/{mntlib,moviefs,nfs} \
+        mnt/{mntlib,moviefs,nfs,ums} \
+        opt/{home/{root,app},dbspace,etc,lib,driver,storage/sdcard,share/applications}  \
         etc/{X11/{applnk,fontpath.d},xdg/autostart,opt,pm/{config.d,power.d,sleep.d},xinetd.d,skel,sysconfig,pki,rc.d/init.d} \
         lib/modules %{_lib}/tls media  proc  sbin srv sys tmp \
         usr/{bin,games,include,%{_lib}/{games,sse2,tls,X11,pm-utils/{module.d,power.d,sleep.d}},lib/{games,locale},libexec,local/{bin,games,lib,%{_lib},sbin,src,libexec,include,},sbin,share/{applications,augeas/lenses,backgrounds,desktop-directories,dict,doc,empty,games,ghostscript/conf.d,gnome,icons,idl,info,man/man{1,2,3,4,5,6,7,8,9,n,1x,2x,3x,4x,5x,6x,7x,8x,9x,0p,1p,3p},mime-info,misc,omf,pixmaps,sounds,themes,xsessions,X11},src,src/kernels,src/debug} \
@@ -45,6 +46,7 @@ mkdir -p bin boot dev run \
 ln -snf ../var/tmp usr/tmp
 ln -snf spool/mail var/mail
 ln -snf rc.d/init.d etc/init.d
+ln -snf mnt/mmc sdcard
 
 
 sed -n -f %{buildroot}/iso_639.sed /usr/share/xml/iso-codes/iso_639.xml \
@@ -122,6 +124,18 @@ rm -rf %{buildroot}
 %dir /mnt/mntlib
 %dir /mnt/moviefs
 %dir /mnt/nfs
+%dir /mnt/ums
+/sdcard
+%dir /opt
+/opt/dbspace
+/opt/home
+/opt/home/root
+/opt/etc
+/opt/lib
+/opt/driver
+/opt/storage
+/opt/share/applications
+/opt/storage/sdcard
 %attr(555,root,root) /proc
 %attr(555,root,root) /sbin
 /srv
