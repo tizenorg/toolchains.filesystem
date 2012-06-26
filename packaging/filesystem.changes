@@ -1,3 +1,9 @@
+* Fri Jun 22 2012 Chris E Ferron <chris.e.ferron@linux.intel.com> 8c21faa
+- changed creation of /root /home to be done in filesystem, and /opt/home /opt/home/root to be links to root dirs as opt is product specific. Setup package to be changed to only add users and libpriv control to add link for user as needed for product specific needs.
+
+* Fri Jun 08 2012 Anas Nashif <anas.nashif@intel.com> 5045263
+- reinitialize changelog
+
 * Fri Jun 01 2012 arron.wang <arron.wang@intel.com> a9ef09e
 - version 0.1 Fixed file list, enable mmc card mounting
 
