@@ -1,5 +1,15 @@
+* Tue Jul 10 2012 Anas Nashif <anas.nashif@intel.com> 20fe377
+- sane homes
+
+* Tue Jun 26 2012 William Douglas <william.douglas@intel.com> d23695d
+- update commit log
+
 * Fri Jun 22 2012 Chris E Ferron <chris.e.ferron@linux.intel.com> 8c21faa
-- changed creation of /root /home to be done in filesystem, and /opt/home /opt/home/root to be links to root dirs as opt is product specific. Setup package to be changed to only add users and libpriv control to add link for user as needed for product specific needs.
+- changed creation of /root /home to be done in filesystem, 
+  and /opt/home /opt/home/root to be links to root dirs as opt 
+  is product specific. 
+- Setup package to be changed to only add users and libpriv control 
+  to add link for user as needed for product specific needs.
 
 * Fri Jun 08 2012 Anas Nashif <anas.nashif@intel.com> 5045263
 - reinitialize changelog
