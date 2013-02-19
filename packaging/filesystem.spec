@@ -1,16 +1,16 @@
 %define disable_docs_package 1
 Summary: The basic directory layout for a Linux system
 Name: filesystem
-Version: 0.2
+Version: 0.1
 Release: 1
 License: Public Domain
 URL: https://fedorahosted.org/filesystem
 Group: System/Base
 BuildArch: noarch
-Source1: lang-exceptions
+# Raw source1 URL: https://fedorahosted.org/filesystem/browser/lang-exceptions?format=raw
+Source1: https://fedorahosted.org/filesystem/browser/lang-exceptions
 Source2: iso_639.sed
 Source3: iso_3166.sed
-Source1001: filesystem.manifest 
 Requires(pre): setup 
 BuildRequires: iso-codes
 
@@ -24,7 +24,6 @@ the directories.
 rm -f $RPM_BUILD_DIR/filelist
 
 %build
-cp %{SOURCE1001} .
 
 %install
 rm -rf %{buildroot}
@@ -34,20 +33,16 @@ install -p -c -m755 %SOURCE3 %{buildroot}/iso_3166.sed
 
 cd %{buildroot}
 
-mkdir -p bin boot dev run home root \
-        mnt/{mntlib,moviefs,nfs,ums} \
-        opt/{home/{app,developer,root},dbspace,etc,lib,driver,storage/sdcard,share/applications}  \
+mkdir -p bin boot dev run \
+        mnt/{mntlib,moviefs,nfs} \
         etc/{X11/{applnk,fontpath.d},xdg/autostart,opt,pm/{config.d,power.d,sleep.d},xinetd.d,skel,sysconfig,pki,rc.d/init.d} \
-        lib/modules %{_lib}/tls media proc sbin srv sys tmp \
+        lib/modules %{_lib}/tls media  proc  sbin srv sys tmp \
         usr/{bin,games,include,%{_lib}/{games,sse2,tls,X11,pm-utils/{module.d,power.d,sleep.d}},lib/{games,locale},libexec,local/{bin,games,lib,%{_lib},sbin,src,libexec,include,},sbin,share/{applications,augeas/lenses,backgrounds,desktop-directories,dict,doc,empty,games,ghostscript/conf.d,gnome,icons,idl,info,man/man{1,2,3,4,5,6,7,8,9,n,1x,2x,3x,4x,5x,6x,7x,8x,9x,0p,1p,3p},mime-info,misc,omf,pixmaps,sounds,themes,xsessions,X11},src,src/kernels,src/debug} \
         var/{lib/misc,local,lock/subsys,log,nis,preserve,run,spool/{mail,lpd},tmp,db,cache,opt,games} 
 
 ln -snf ../var/tmp usr/tmp
 ln -snf spool/mail var/mail
 ln -snf rc.d/init.d etc/init.d
-ln -snf mnt/mmc sdcard
-ln -sf  ../opt/home/app %{buildroot}/home/
-ln -sf  ../opt/home/developer %{buildroot}/home/
 
 
 sed -n -f %{buildroot}/iso_639.sed /usr/share/xml/iso-codes/iso_639.xml \
@@ -109,7 +104,6 @@ done
 rm -rf %{buildroot}
 
 %files -f filelist
-%manifest filesystem.manifest
 %defattr(0755,root,root,-)
 %dir %attr(555,root,root) /
 %attr(555,root,root) /bin
@@ -125,23 +119,6 @@ rm -rf %{buildroot}
 %dir /mnt/mntlib
 %dir /mnt/moviefs
 %dir /mnt/nfs
-%dir /mnt/ums
-/sdcard
-%dir /opt
-%dir /opt/dbspace
-%dir /home
-%dir /root
-/home/app
-/home/developer
-%attr(550,root,root) /opt/home/root
-%attr(750,app,app) /opt/home/app
-%attr(750,developer,developer) /opt/home/developer
-%dir /opt/etc
-%dir /opt/lib
-%dir /opt/driver
-%dir /opt/storage
-%dir /opt/share/applications
-%dir /opt/storage/sdcard
 %attr(555,root,root) /proc
 %attr(555,root,root) /sbin
 /srv
