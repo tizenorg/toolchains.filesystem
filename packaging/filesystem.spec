@@ -2,8 +2,9 @@
 Summary: The basic directory layout for a Linux system
 Name: filesystem
 Version: 0.1
-Release: 1
-License: Public Domain
+Release: 2
+VCS:     external/filesystem#submit/trunk/20130213.050629-3-g904ab3b53e52e294de52977693cbddebf22ca3ae
+License: Apache-2.0
 URL: https://fedorahosted.org/filesystem
 Group: System/Base
 BuildArch: noarch
@@ -11,7 +12,8 @@ BuildArch: noarch
 Source1: https://fedorahosted.org/filesystem/browser/lang-exceptions
 Source2: iso_639.sed
 Source3: iso_3166.sed
-Requires(pre): setup 
+Source4: LICENSE.Apache-2.0
+Requires(pre): setup
 Source101: tizen.loc
 BuildRequires: iso-codes
 
@@ -31,6 +33,8 @@ rm -rf %{buildroot}
 mkdir %{buildroot}
 install -p -c -m755 %SOURCE2 %{buildroot}/iso_639.sed
 install -p -c -m755 %SOURCE3 %{buildroot}/iso_3166.sed
+mkdir -p %{buildroot}/usr/share/license
+install -m0664 %SOURCE4 %{buildroot}/usr/share/license/%{name}
 
 cd %{buildroot}
 
@@ -39,12 +43,11 @@ mkdir -p bin boot dev run \
         etc/{X11/{applnk,fontpath.d},xdg/autostart,opt,pm/{config.d,power.d,sleep.d},xinetd.d,skel,sysconfig,pki,rc.d/init.d} \
         lib/modules %{_lib}/tls media  proc  sbin srv sys tmp \
         usr/{bin,games,include,%{_lib}/{games,sse2,tls,X11,pm-utils/{module.d,power.d,sleep.d}},lib/{games,locale},libexec,local/{bin,games,lib,%{_lib},sbin,src,libexec,include,},sbin,share/{applications,augeas/lenses,backgrounds,desktop-directories,dict,doc,empty,games,ghostscript/conf.d,gnome,icons,idl,info,man/man{1,2,3,4,5,6,7,8,9,n,1x,2x,3x,4x,5x,6x,7x,8x,9x,0p,1p,3p},mime-info,misc,omf,pixmaps,sounds,themes,xsessions,X11},src,src/kernels,src/debug} \
-        var/{lib/misc,local,lock/subsys,log,nis,preserve,run,spool/{mail,lpd},tmp,db,cache,opt,games} 
+        var/{lib/misc,local,lock/subsys,log,nis,preserve,run,spool/{mail,lpd},tmp,db,cache,opt,games}
 
 ln -snf ../var/tmp usr/tmp
 ln -snf spool/mail var/mail
 ln -snf rc.d/init.d etc/init.d
-
 
 sed -n -f %{buildroot}/iso_639.sed /usr/share/xml/iso-codes/iso_639.xml \
   >%{buildroot}/iso_639.tab
@@ -109,6 +112,7 @@ done
 rm -rf %{buildroot}
 
 %files -f filelist
+/usr/share/license/%{name}
 %defattr(0755,root,root,-)
 %dir %attr(555,root,root) /
 %attr(555,root,root) /bin
@@ -174,7 +178,7 @@ rm -rf %{buildroot}
 %dir %attr(0775,root,lock) /var/lock
 %attr(755,root,root) /var/lock/subsys
 /var/cache
-/var/log
+%attr(755,log,log) /var/log
 /var/mail
 /var/nis
 /var/opt
